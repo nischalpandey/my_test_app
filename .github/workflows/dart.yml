@@ -42,34 +42,34 @@ jobs:
           body: "This is the first iOS release"
 
   build-android:
-  name: 🎉 Android Build
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
+    name: 🎉 Android Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
-        architecture: x64
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
 
-    - name: Install Java 17
-      run: |
-        sudo apt update
-        sudo apt install -y openjdk-17-jdk
+      - name: Install Java 17
+        run: |
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk
 
-    - name: Set JAVA_HOME
-      run: echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
+      - name: Set JAVA_HOME
+        run: echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
 
-    - run: flutter pub get
+      - run: flutter pub get
 
-    - run: flutter build apk --debug
+      - run: flutter build apk --debug
 
-    - name: Upload APK to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/app/outputs/flutter-apk/app-debug.apk
-        tag: v1.0
-        overwrite: true
-        body: "This is the first Android release"
+      - name: Upload APK to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/app/outputs/flutter-apk/app-debug.apk
+          tag: v1.0android
+          overwrite: true
+          body: "This is the first Android release"
 
